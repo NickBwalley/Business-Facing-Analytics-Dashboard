@@ -61,14 +61,6 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*CODE FOR CREATING A NEW USER*/
--- Create the new user
-CREATE USER 'nick_bwalley'@'localhost' IDENTIFIED BY 'root';
--- Grant privileges to the new user
-GRANT ALL PRIVILEGES ON *.* TO 'nick_bwalley'@'localhost';
--- Flush privileges to apply the changes
-FLUSH PRIVILEGES;
-
 
 --
 -- Dumping data for table `customers`
