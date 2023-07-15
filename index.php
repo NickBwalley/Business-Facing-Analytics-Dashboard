@@ -33,8 +33,8 @@
             </ul>
             <li>Internal Business Processes Perspective (KPI3a and KPI3b)</li>
             <ul>
-              <li><strong>Leading Indicator:</strong> Average time for tea leaves processing. </li>
-              <li><strong>Lagging Indicator:</strong> Quality of the processed tea leaves. </li>
+              <li><strong>Leading Indicator:</strong> Number of kgs processed in a month. </li>
+              <li><strong>Lagging Indicator:</strong> Customer satisfaction on quality. </li>
             </ul>
             <li>Innovation and Learning Perspective (KPI4a and KPI4b)</li>
             <ul>
@@ -97,26 +97,26 @@
   } else {
     echo "0 results";
   }
-  ////////////////////// TOTAL PROCESSING TIME
-  $sql = "SELECT MAX(amount) AS highestProfit FROM payments;";
+  ////////////////////// NUMBER OF PROCESSED KGS 
+  $sql = "SELECT MAX(number_of_kgs_harvested) AS highestHarvest FROM orders;";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-      $highestProfit = $row['highestProfit'];
+      $highestHarvest = $row['highestHarvest'];
     }
   } else {
     echo "0 results";
   }
-  /////////////////////////
-  $sql = "SELECT MAX(amount) AS highestProfit FROM payments;";
+  ///////////////////////// TOTAL TRAINED EMPLOYEES
+  $sql = "SELECT SUM(is_trained) AS isTrained FROM employees;";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-      $highestProfit = $row['highestProfit'];
+      $isTrained = $row['isTrained'];
     }
   } else {
     echo "0 results";
@@ -138,7 +138,7 @@
             <div class="card-body text-center">
               <strong>Total Resolved Complaints</strong><hr>
               <h1>
-                <?= humanize_number(8233000000) ?>
+                <?= humanize_number($customerComplaints) ?>
               </h1>
             </div>
         </div>
@@ -146,9 +146,9 @@
   <div class="col-md-3 my-1">
         <div class="card">
             <div class="card-body text-center">
-              <strong>Total Processing Time</strong><hr>
+              <strong>Highest Number Processed per day</strong><hr>
               <h1>
-                <?= humanize_number(6400000.25) ?>
+                <?= humanize_number($highestHarvest) ?>
               </h1>
             </div>
         </div>
@@ -158,7 +158,7 @@
             <div class="card-body text-center">
               <strong>Total Number of Trained Employees</strong><hr>
               <h1>
-                <?= humanize_number(350) ?>
+                <?= humanize_number($isTrained) ?>
               </h1>
             </div>
         </div>
