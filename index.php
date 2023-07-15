@@ -73,14 +73,50 @@
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
-  
-  $sql = "SELECT SUM(`payments`.`amount`) AS salesRevenue FROM `payments` WHERE YEAR(`payments`.`paymentDate`) = '2005';";
+  //////////// HIGHEST PROFIT MARGIN
+  $sql = "SELECT MAX(amount) AS highestProfit FROM payments;";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-      $salesRevenue = $row['salesRevenue'];
+      $highestProfit = $row['highestProfit'];
+    }
+  } else {
+    echo "0 results";
+  }
+  ///////////////// TOTAL RESOLVED COMPLAINTS
+  $sql = "SELECT SUM(customer_complaints) AS customerComplaints FROM employees;";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+      $customerComplaints = $row['customerComplaints'];
+    }
+  } else {
+    echo "0 results";
+  }
+  ////////////////////// TOTAL PROCESSING TIME
+  $sql = "SELECT MAX(amount) AS highestProfit FROM payments;";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+      $highestProfit = $row['highestProfit'];
+    }
+  } else {
+    echo "0 results";
+  }
+  /////////////////////////
+  $sql = "SELECT MAX(amount) AS highestProfit FROM payments;";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+      $highestProfit = $row['highestProfit'];
     }
   } else {
     echo "0 results";
@@ -90,9 +126,9 @@
   <div class="col-md-3 my-1">
         <div class="card">
             <div class="card-body text-center">
-              <strong>Total Sales Revenue (topline)</strong><hr>
+              <strong>Highest Profit Margin (topline)</strong><hr>
               <h1>
-                KES <?= humanize_number($salesRevenue) ?>
+                KES <?= humanize_number($highestProfit) ?>
               </h1>
             </div>
         </div>
@@ -100,7 +136,7 @@
   <div class="col-md-3 my-1">
         <div class="card">
             <div class="card-body text-center">
-              <strong>Key Metric 2</strong><hr>
+              <strong>Total Resolved Complaints</strong><hr>
               <h1>
                 <?= humanize_number(8233000000) ?>
               </h1>
@@ -110,7 +146,7 @@
   <div class="col-md-3 my-1">
         <div class="card">
             <div class="card-body text-center">
-              <strong>Key Metric 3</strong><hr>
+              <strong>Total Processing Time</strong><hr>
               <h1>
                 <?= humanize_number(6400000.25) ?>
               </h1>
@@ -120,7 +156,7 @@
   <div class="col-md-3 my-1">
         <div class="card">
             <div class="card-body text-center">
-              <strong>Key Metric 4</strong><hr>
+              <strong>Total Number of Trained Employees</strong><hr>
               <h1>
                 <?= humanize_number(350) ?>
               </h1>
