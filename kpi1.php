@@ -1,9 +1,9 @@
 <!-- Data for KPI1a: Top 5 selling products of the year-->
 <?php
-  $currentYear_top5SellingProducts = 2005;
+  $currentYear_top5SellingProducts = 2023;
   $salesPerProduct_target = 1300;
 
-  $currentYear_monthlySalesRevenue = 2005;
+  $currentYear_monthlySalesRevenue = 2023;
   $previousYear_monthlySalesRevenue = $currentYear_monthlySalesRevenue - 1;
   $monthlySalesRevenue_target = 300000;
 
@@ -99,7 +99,7 @@
     die("Connection failed: " . $conn->connect_error);
   }
   
-  $sql = "CALL `YOYSalesRevenuePerMonth`(2005);";
+  $sql = "CALL `YOYSalesRevenuePerMonth`(2023);";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
@@ -198,7 +198,7 @@
   <div class="card">
   <div class="card-body text-center">
     <strong>
-      KPI1a (leading): <u>Top 5 Selling Products of the Year</u><br>
+      KPI1a (leading): <u>Forecasted sales growth for the year.</u><br>
       Target for the Annual Sales per Product = <?= number_format($salesPerProduct_target,2,".",",") ?> <br>
       Current Year = <?= $currentYear_top5SellingProducts ?>
     </strong>
@@ -210,7 +210,7 @@
   <div class="card">
   <div class="card-body text-center">
     <strong>
-      KPI1b (lagging): <u>Monthly Sales Revenue</u><br>
+      KPI1b (lagging): <u>Increased profit margin for the year.</u><br>
       Target for the Monthly Sales Revenue = <?= number_format($monthlySalesRevenue_target,2,".",",") ?> <br>
       Current Year = <?= $currentYear_monthlySalesRevenue ?>
     </strong>

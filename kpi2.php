@@ -1,89 +1,91 @@
 <div class="col-md-6 my-1">
     <div class="card">
-    <div class="card-body">KPI2a (leading):</div>
+    <div class="card-body"> <strong> KPI2a (leading): Number of Complaints Received and Resolved during the Year </strong></div>
     <div class="card-body"><canvas id="KPI2a"></canvas></div>
 </div>
 </div>
 <div class="col-md-6 my-1">
     <div class="card">
-    <div class="card-body">KPI2b (lagging):</div>
+    <div class="card-body"><strong>KPI2b (lagging): Customer Satisfaction Index for the Year</strong> </div>
     <div class="card-body"><canvas id="KPI2b"></canvas></div>
 </div>
 </div>
+<?php
+include 'dbconfig.php';
+
+// Create connection
+$conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "CALL `FetchComplaintData`;";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  $complaintData = array();
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    $complaintData[] = array(
+      'x' => $row['month_year'],
+      'y' => $row['number_of_complaints']
+    );
+  }
+} else {
+  echo "0 results";
+}
+
+$conn->close();
+?>
 <script>
-      /* KPI2a */
-      const kpi2a = document.getElementById('KPI2a');
-      new Chart(kpi2a, {
-        type: 'bar',
-        data: {
-          datasets: [{
-            label: 'First Dataset',
-            data: [{
-              x: 20,
-              y: 30,
-              r: 20
-            }, {
-              x: 40,
-              y: 10,
-              r: 10
-            }, {
-              x: 15,
-              y: 20,
-              r: 5
-            },],
-            backgroundColor: 'rgba(238, 36, 56, 0.7)'
-          }, {
-            label: 'Second Dataset',
-            data: [{
-              x: 8,
-              y: 7,
-              r: 15
-            }, {
-              x: 4,
-              y: 7,
-              r: 10
-            }, {
-              x: 2,
-              y: 3,
-              r: 5
-            },],
-            backgroundColor: 'rgba(53, 32, 240, 0.65)'
-          }
-        ]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Quantity'
-              }
-            },
-            x: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Month'
-              }
-            }
-          },
-          plugins: {
-            tooltip: {
-              intersect: true
-            },
-            legend: {
-              position: 'bottom',
-              labels : {
-                usePointStyle: true
-              }
-            }
-          },
-          interaction: {
-              mode: 'point'
-          } 
+      /** KPI2a - REFINED */
+      const complaintChart = document.getElementById('KPI2a');
+
+new Chart(complaintChart, {
+  type: 'bar',
+  data: {
+    datasets: [{
+      label: 'Number of Complaints',
+      data: <?php echo json_encode($complaintData); ?>,
+      backgroundColor: 'rgba(238, 36, 56, 0.7)'
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Number of Complaints'
         }
-      });
+      },
+      x: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Month'
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        intersect: true
+      },
+      legend: {
+        position: 'bottom',
+        labels: {
+          usePointStyle: true
+        }
+      }
+    },
+    interaction: {
+      mode: 'point'
+    }
+  }
+});
+      
+      /** KPI 2b - REFINED */
       /* KPI2b */
       const kpi2b = document.getElementById('KPI2b');
 
